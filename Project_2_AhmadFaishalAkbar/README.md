@@ -1,5 +1,3 @@
-## No.2
-
 To run it :
 1. build the postgres image
 ```
