@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: raw
+    database: db_test1
+    schema: public
+    tables:
+      - name: categories
+      - name: shippers
+      - name: customers
+      - name: regions
+      - name: suppliers
+      - name: employees
+      - name: products
+      - name: territories
+      - name: employee_territories
+      - name: orders
+      - name: order_details

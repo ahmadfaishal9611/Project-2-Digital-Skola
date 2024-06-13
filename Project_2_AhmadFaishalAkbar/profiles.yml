@@ -1,0 +1,14 @@
+dbt_project:
+  outputs:
+
+    dev:
+      type: postgres
+      threads: 1
+      host: postgres_container
+      port: 5432
+      user: postgres
+      pass: '1234'
+      dbname: "db_test1"
+      schema: warehouse
+  
+  target: dev

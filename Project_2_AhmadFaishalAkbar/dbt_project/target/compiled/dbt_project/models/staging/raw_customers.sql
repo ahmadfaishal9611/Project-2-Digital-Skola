@@ -1,0 +1,14 @@
+SELECT
+    "customerID",
+    "companyName",
+    "contactName",
+    "contactTitle",
+    "address",
+    "city",
+    "region",
+    "postalCode",
+    "country",
+    "phone",
+    "fax"
+FROM
+    "db_test1"."public"."customers"

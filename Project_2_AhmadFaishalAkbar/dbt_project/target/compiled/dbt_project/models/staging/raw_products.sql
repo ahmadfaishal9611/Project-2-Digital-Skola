@@ -1,0 +1,13 @@
+SELECT
+    "productID",
+    "productName",
+    "supplierID",
+    "categoryID",
+    "quantityPerUnit",
+    "unitPrice",
+    "unitsInStock",
+    "unitsOnOrder",
+    "reorderLevel",
+    "discontinued"
+FROM
+    "db_test1"."public"."products"

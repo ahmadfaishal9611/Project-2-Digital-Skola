@@ -1,0 +1,177 @@
+version: 2
+
+sources:
+  - name: raw_categories
+  - name: raw_shippers
+  - name: raw_customers
+  - name: raw_regions
+  - name: raw_suppliers
+  - name: raw_employees
+  - name: raw_products
+  - name: raw_territories
+  - name: raw_employee_territories
+  - name: raw_orders
+  - name: raw_order_details
+  
+
+models:
+  - name: raw_categories
+    description: "Staging model for raw_categories"
+    tests:
+      - unique:
+          - "categoryID"
+      - not_null:
+          - "categoryID"
+          - "categoryName"
+          - "description"
+
+  - name: raw_shippers
+    description: "Staging model for raw_shippers"
+    tests:
+      - unique:
+          - "shipperID"
+      - not_null:
+          - "shipperID"
+          - "companyName"
+          - "phone"
+
+  - name: raw_customers
+    description: "Staging model for raw_customers"
+    tests:
+      - unique:
+          - "customerID"
+      - not_null:
+          - "customerID"
+          - "contactName"
+
+  - name: raw_regions
+    description: "Staging model for raw_regions"
+    tests:
+      - unique:
+          - "regionID"
+      - not_null:
+          - "regionID"
+          - "regionDescription"
+
+  - name: raw_suppliers
+    description: "Staging model for raw_suppliers"
+    tests:
+      - unique: 
+          - "supplierID"
+      - not_null:
+          - "supplierID"
+          - "companyName"
+
+  - name: raw_employees
+    description: "Staging model for raw_employees"
+    tests:
+      - unique:
+          - "employeeID"
+      - not_null:
+          - "employeeID"
+          - "lastName"
+          - "firstName"
+
+  - name: raw_products
+    description: "Staging model for raw_products"
+    tests:
+      - unique:
+          - "productID"
+      - not_null:
+          - "productID"
+          - "productName"
+          - "categoryID"
+          - "supplierID"
+
+  - name: raw_territories
+    description: "Staging model for raw_territories"
+    tests:
+      - unique:
+          - "territoryID"
+      - not_null:
+          - "territoryID"
+          - "territoryDescription"
+          - "regionID"
+
+  - name: raw_employee_territories
+    description: "Staging model for raw_employee_territories"
+    tests:
+      - not_null:
+          - "employeeID"
+          - "territoryID"
+
+  - name: raw_orders
+    description: "Staging model for raw_orders"
+    tests:
+      - unique:
+          - "orderID"
+      - not_null:
+          - "orderID"
+          - "customerID"
+          - "employeeID"
+          - "orderDate"
+          - "shipVia"
+
+  - name: raw_order_details
+    description: "Staging model for raw_order_details"
+    tests:
+      - not_null:
+          - "orderID"
+          - "productID"
+          - "unitPrice"
+          - "quantity"
+          - "discount"
+
+  - name: dwh_orders_details
+    description: "Intermediate model for order data, joining raw_orders, raw_order_details, raw_products, raw_employees, raw_categories, and raw_suppliers"
+    columns:
+      - name: "orderID"
+        description: "Unique identifier for each order"
+      - name: "orderDate"
+        description: "Date the order was placed"
+      - name: "employeeName"
+        description: "Name of the employee"
+      - name: "productName"
+        description: "Name of the product ordered"
+      - name: "categoryName"
+        description: "Category of the product ordered"
+      - name: "supplierCompany"
+        description: "Company who supplies the products"
+      - name: "unitPrice"
+        description: "Product price per unit"
+      - name: "quantity"
+        description: "Number of products ordered"
+      - name: "discount"
+        description: "Discount that is given"
+      - name: "grossRevenue"
+        description: "(unitPrice - (unitPrice * discount)) * quantity"
+    tests:
+      - not_null:
+          - "orderID"
+          - "orderDate"
+          - "employeeName"
+          - "productName"
+          - "categoryName"
+          - "supplierCompany"
+          - "unitPrice"
+          - "quantity"
+          - "discount"
+          - "grossRevenue"
+
+  - name: data_mart_monthly_top_product_category
+    columns:
+      - name: "month"
+      - name: "topProductCategory"
+      - name: "totalSold(quantity)"
+
+  - name: data_mart_monthly_best_employee
+    columns:
+      - name: "month"
+      - name: "bestEmployee"
+      - name: "grossRevenue"
+
+  - name: data_mart_suppliers_monthly_gross_rev
+    columns:
+      - name: "month"
+      - name: "supplierCompany"
+      - name: "grossRevenue"
