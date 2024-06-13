@@ -29,5 +29,5 @@ docker build -t dbt_image -f Dockerfile.dbt .
 6. run dbt container
 ```
 docker run --name dbt_container --link postgres_container:postgres -v $(pwd)/dbt_project:/app/dbt_project -v $(pwd)/profiles.yml:/root/.dbt/profiles.yml dbt_image
-
+```
 7. check the result in dbeaver in the database target schema that you set in profiles.yml (in this case 'warehouse' schema)
