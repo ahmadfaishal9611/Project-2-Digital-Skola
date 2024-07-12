@@ -4,7 +4,7 @@ WITH a AS(
 		"employeeName",
 		SUM("grossRevenue") AS "grossRevenue",
 		DENSE_RANK() OVER (PARTITION BY DATE_TRUNC('month', "orderDate") ORDER BY SUM("grossRevenue") DESC) AS rank
-	FROM {{ ref('dwh_order_details') }}
+	FROM {{ ref('fact_order_details') }}
 	GROUP BY month, "employeeName"
 )
 	SELECT
