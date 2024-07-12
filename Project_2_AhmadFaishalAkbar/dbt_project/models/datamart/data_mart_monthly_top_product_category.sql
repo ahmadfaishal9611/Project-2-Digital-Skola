@@ -4,7 +4,7 @@ WITH a AS(
 		"categoryName",
 		SUM(quantity) AS "totalSold(quantity)",
 		DENSE_RANK() OVER (PARTITION BY DATE_TRUNC('month', "orderDate") ORDER BY SUM(quantity) DESC) AS rank
-	FROM {{ ref('dwh_order_details') }}
+	FROM {{ ref('fact_order_details') }}
 	GROUP BY month, "categoryName"
 )
 	SELECT
